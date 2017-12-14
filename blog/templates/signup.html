@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="resource/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resource/css/film.css" rel="stylesheet">
+    <link rel="stylesheet" href="resource/css/bootstrap-demo-style.css" />
+<link rel="stylesheet" href="resource/css/style.css" />
+
+    <script src="resource/bootstrap/js/jquery-2.2.2.min.js"></script>
+    <script src="resource/bootstrap/js/bootstrap.min.js"></script>
+
+    <title>QuanQqqqq的博客--注册</title>
+
+</head>
+<body class="signup">
+<script type="text/javascript">
+    //对象绑定
+    $(function () {
+        $("#btn-get-code").click(function () {
+            var tel = $("#tel").val();
+            if (isTelLegal(tel)) {
+                getCode(tel);
+            }
+        });
+
+        $("#step1-submit").click(function () {
+            if (!isTelLegal($("#tel").val())) {
+                return;
+            }
+            var code = $("#codeNum").val();
+            if (isCodeLegal(code)) {
+                step1Submit($("#tel").val(), $("#codeNum").val());
+            }
+        });
+
+        $("#usr-name").blur(function () {
+            var usrname = $("#usr-name").val();
+            isUsrNameLegal(usrname);
+        });
+
+        $("#psw").blur(function () {
+            var psw = $("#psw").val();
+            isPswLegal(psw);
+        });
+
+        $("#re-psw").blur(function () {
+            var psw = $("#psw").val();
+            var re_psw = $("#re-psw").val();
+            isRePswLegal(psw, re_psw);
+        });
+
+        $("#step2-submit").click(function () {
+            var usrname = $("#usr-name").val();
+            var psw = $("#psw").val();
+            var re_psw = $("#re-psw").val();
+            if ((isUsrNameLegal(usrname) && isPswLegal(psw) && isRePswLegal(psw, re_psw))) {
+                step2Submit(usrname, psw);
+            }
+        });
+
+    });
+
+    //验证验证码是否合法
+    function isCodeLegal(code) {
+        var codeLength = 4;
+        if (!code || code.length != codeLength) {
+            $("#err-info").html("验证码必须是" + codeLength + "位数字");
+            return false;
+        }
+        var reg = /^\d{4,}$/;
+        if (!reg.test(code)) {
+            $("#err-info").html("验证码必须是4位数字");
+            return false;
+        }
+        $("#err-info").html("");
+
+        return true;
+    }
+
+    //验证手机号码合法
+    function isTelLegal(tel) {
+        if (!tel) {
+            $("#err-info").html(
+                    "电子邮箱不能为空！"
+            );
+            return false;
+        }
+        var reg = /^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/;
+        if (!reg.test(tel)) {
+            $("#err-info").html(
+                    "请输入正确的电子邮箱！"
+            );
+            return false;
+        }
+        $("#err-info").html("");
+        return true;
+    }
+
+    //发送请求验证码请求
+    function getCode(tel) {
+        var url = "";
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {tel: tel},
+            cache: false,
+            //判断手机号码是否已经被注册
+            dataType: 'json',
+            success: function (data) {
+                var isLegal = data.legal;
+                if (isLegal == false) {
+                    $("#err-info").html(
+                            "此邮箱已经注册"
+                    );
+                }
+            }
+        });
+    }
+
+    function step1Submit(tel, code) {
+        var url = "";
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {tel: tel, keycode: code},
+            cache: false,
+            dataType: 'json',
+            success: function (data) {
+                if (data.legal == false) {
+                    $("#err-info").html(
+                            "邮箱或验证码错误"
+                    );
+                } else {
+                    step1SubmitSuccess();
+                }
+            }
+        });
+    }
+
+    function step1SubmitSuccess() {
+        $("#reg-step1").removeClass("active");
+        $("#tab-step1").removeClass("active");
+        $("#reg-step2").addClass("active");
+        $("#tab-step2").addClass("active");
+    }
+
+    function step2SubmitSuccess() {
+        $("#reg-step2").removeClass("active");
+        $("#tab-step2").removeClass("active");
+        $("#reg-step3").addClass("active");
+        $("#tab-step3").addClass("active");
+    }
+
+
+    function isUsrNameLegal(usr_name) {
+        if (!usr_name) {
+            return false;
+        }
+        var reg = /^[\s\S]{5,16}$/;
+        if (!reg.test(usr_name)) {
+            $("#err-usr-name").html("请填入5-16位字符的用户名!");
+            return false;
+        }
+        $("#err-usr-name").html("");
+
+        return true;
+    }
+
+    function isPswLegal(psw) {
+        if (!psw) {
+            $("#err-psw").html("请输入密码！");
+            return false;
+        }
+        var reg =  /((?=.*\d)(?=.*\D)|(?=.*[a-zA-Z])(?=.*[^a-zA-Z]))^.{8,16}$/;
+        if (!reg.test(psw)) {
+            $("#err-psw").html("8~16个字符，需要同时有字母字符数字中的两种");
+            return false;
+        }
+        $("#err-psw").html("");
+        return true;
+    }
+
+    function isRePswLegal(psw, re_psw) {
+        if (!re_psw) {
+            $("#err-re-psw").html("请输入密码！");
+            return false;
+        }
+        if (psw != re_psw) {
+            $("#err-re-psw").html("两次输入的密码不一致！");
+            return false;
+        }
+        $("#err-re-psw").html("");
+        return true;
+    }
+
+    function step2Submit(usr_name, psw) {
+        var url ="";
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {
+                username: usr_name,
+                password: psw,
+            },
+            cache: false,
+            dataType: 'json',
+            success: function (data) {
+                step2SubmitSuccess();
+            }
+        });
+    }
+</script>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="nav-content-width">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li ><a href="index.html" class="navbar-brand"><b>主页</b></a></li>
+        <li><a href="mySay.html" class="navbar-brand"><b>我的博客</b></a></li>
+        <li><a href="articleManage.html" class="navbar-brand"><b>管理后台</b></a></li>
+        <li><a href="aboutUs.html" class="navbar-brand"><b>关于</b></a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="navbar-active"><a href="login.html" class="navbar-brand"><b>登录</b></a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div>
+</nav>
+
+<div class="content" style="margin-top: 30px;">
+    <div class="reg-page">
+        <div class="reg-steps">
+            <ul class="nav nav-pills">
+                <li class="active" id="tab-step1"><a role="tab">
+                    <div class="step-tab-content">
+                        <i>1</i><span>验证邮箱</span>
+                    </div>
+                </a></li>
+                <li class="" id="tab-step2"><a role="tab">
+                    <div class="step-tab-content">
+                        <span><i>2</i>填写账号信息</span>
+                    </div>
+                </a></li>
+                <li class="" id="tab-step3"><a role="tab">
+                    <div class="step-tab-content">
+                        <span><i>3</i>注册成功</span>
+                    </div>
+                </a></li>
+            </ul>
+        </div>
+        <div class="reg-content tab-content">
+            <div role="tabpanel" class="tab-pane active" id="reg-step1">
+                <div class="content-layout">
+                    <div class="form-item">
+                        <div class="form-label"><span>电子邮箱</span></div>
+                        <input id="tel" name="Tel" type="text" class="form-control" placeholder="请输入您的电子邮箱">
+                        <button id="btn-get-code" name="GetCode" class="getCode">获取验证码</button>
+                    </div>
+                    <div class="form-item">
+                        <div class="form-label"><span>验证码</span></div>
+                        <input id="codeNum" name="CodeNum" type="text" class="form-control" placeholder="输入您收到的验证码"
+                               maxlength="4">
+                    </div>
+                    <div class="form-item">
+                        <div class="form-label"></div>
+                        <div class="form-item-layout">
+                            <div class="err-info">
+                                <label id="err-info"></label>
+                            </div>
+                            <div class="check-line">
+                                <label><span>点击下一步按钮，即表示同意<a href="#">服务条款</a>和<a href="#">隐私权政策</a>。</span></label>
+                            </div>
+                            <div>
+                                <button class="step1-submit" id="step1-submit"><span>下一步</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="reg-step2">
+                <div class="content-layout">
+                    <div class="form-item">
+                        <div class="form-label"><span>名字</span></div>
+                        <input id="usr-name" class="form-control" placeholder="5-16个字" maxlength="16">
+                        <div class="form-err-info">
+                            <label id="err-usr-name"></label>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="form-label"><span>密码</span></div>
+                        <input id="psw" name="" type="password" class="form-control" placeholder="6-16位字符，必须含有字母和数字"
+                               minlength="6"
+                               maxlength="16">
+                        <div class="form-err-info">
+                            <label id="err-psw"></label>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="form-label"><span>确认密码</span></div>
+                        <input id="re-psw" type="password" class="form-control keycode" placeholder="请重新输入密码"
+                               minlength="6" maxlength="16">
+                        <div class="form-err-info">
+                            <label id="err-re-psw"></label>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="form-label"><span>验证码</span></div>
+                        <div class="keycode form-item-layout">
+                            <input id="key_code" type="password" class="form-control" placeholder="请输入右侧的验证码"
+                                   minlength="4" maxlength="4">
+                            <div id="key-code-img">
+                                <img class="img-responsive" src="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="form-label"></div>
+                        <div class="form-item-layout">
+                            <button class="step1-submit" id="step2-submit"><span>提交</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="reg-step3">
+                <div class="content-layout">
+                    <div class="form-item">
+                        <div class="form-label"></div>
+                        <div class="form-item-layout">
+                            <span>您已注册成功!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="foot-container">
+      <div class="col-md-8">
+        <h2>本站介绍</h2>
+        <p>
+        北京师范大学珠海分校（Beijing Normal University, Zhuhai）坐落在海滨城市珠海，是教育部批准设立、由北京师范大学和珠海市人民政府合作举办、进行本科层次教育的全日制普通本科高校。北京师范大学珠海分校（Beijing Normal University, Zhuhai）坐落在海滨城市珠海，是教育部批准设立、由北京师范大学和珠海市人民政府合作举办、进行本科层次教育的全日制普通本科高校。
+        </p>
+        <br>
+        <p>
+        北京师范大学珠海分校（Beijing Normal University, Zhuhai）坐落在海滨城市珠海，是教育部批准设立、由北京师范大学和珠海市人民政府合作举办、进行本科层次教育的全日制普通本科高校。
+        </p>
+        <br>
+      </div>
+      <div class="col-md-3">
+        <h2>友情链接</h2>
+        <p><a href="http://acm.bnuz.edu.cn">北京师范大学珠海分校ACM协会官网</a></p>
+        <p><a href="https://oj.bnuz.edu.cn">WeJudge在线评测教学辅助系统</a></p>
+      </div>
+    </div>
+    
+  </div>
+    <center>
+      <br>
+      <p>
+        Copyright ©2016 QuanQqqqq
+      </p>
+    </center>
+</footer>
+
+
+</body>
+</html>

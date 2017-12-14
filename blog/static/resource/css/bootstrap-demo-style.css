@@ -1,0 +1,133 @@
+/*
+用于bootstrap基础样式更改
+创建时间2016-11-4
+创建人 QuanQqqqq
+更新时间2016-11-21
+*/
+
+
+/*************总体页面设置*************/
+
+.body-style{
+	background-color: #f0f0f0;
+}
+/***********导航栏样式更改**************/
+
+/*导航栏两边间距*/
+.nav-content-width>.collapse{
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.container{
+	width:80%;
+}
+
+/*导航栏标题聚焦样式*/
+.navbar-inverse .navbar-brand:focus, .navbar-inverse .navbar-brand:hover{
+	color:#6c6c6c;
+	background-color: transparent;
+}
+/*导航栏其余li聚焦样式*/
+.navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover {
+	color:#6c6c6c;
+
+}
+
+/*导航栏底色*/
+.navbar-inverse {
+	background-color: #fff;
+	border-color: #fff;
+}
+
+/*导航栏active*/
+.navbar-nav>.navbar-active>.navbar-brand{
+	color:#00caca;
+}
+
+/*导航栏li间隔*/
+.navbar-nav>li>a{
+	padding-left:40px;
+	padding-right:40px;
+}
+
+/*导航栏icon*/
+.navbar-inverse .navbar-toggle .icon-bar{
+	background-color: #000;
+}
+
+.nav-content-width{
+	box-shadow: 0px 1px 30px #888888;
+}
+/*************内容要样式更改***********/
+
+/*行row间隔更改*/
+.row{
+	margin-top:30px;
+}
+
+
+/*p标签显示4行*/
+.media-body>p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 4;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+	line-height:24px;
+	font-family: "微软雅黑";
+}
+
+/*hr线*/
+.container>hr{
+	background:#b0b0b0;
+	width: 80%;
+	height: 1px;
+}
+
+
+/*内容大小更改*/
+.col-md-9 > .container{
+	width: 100%;
+}
+.row >.col-md-7{
+	background-color: #fff;
+	/*border-radius:15px;*/
+}
+.row > .col-md-3 > .container{
+	background-color: #fff;
+	margin-bottom: 20px;
+}
+.container > .title{
+	border-bottom:1px solid #ebebeb;
+	position: relative;
+	margin-bottom:21px;
+	padding-bottom:7px;
+}
+.container > .title > h4{
+	font-size: 1.5em;
+	font-family: "微软雅黑";
+}
+.container > .title:after{
+	content:"";
+	background: #00caca;
+	height: 1px;
+	width: 90px;
+	bottom: -1px;
+	left: 0;
+	position: absolute;
+}
+
+.row > .col-md-3{
+	margin-bottom: 20px;
+}
+
+.col-md-7 > .container {
+	margin-bottom: 20px;
+}
+
+/*表格td更加宽松*/
+.table > tbody > tr > td , .table > thead > tr > td{
+	padding: 10px;
+}

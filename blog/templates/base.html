@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+{% include "head.html" %}
+<body class="body-style">
+  {% include "navbar.html" %}
+  {% block body_content %}
+  {% endblock %}
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="foot-container">
+        <div class="col-md-8">
+          <h2>本站介绍</h2>
+          <p>
+          北京师范大学珠海分校（Beijing Normal University, Zhuhai）坐落在海滨城市珠海，是教育部批准设立、由北京师范大学和珠海市人民政府合作举办、进行本科层次教育的全日制普通本科高校。北京师范大学珠海分校（Beijing Normal University, Zhuhai）坐落在海滨城市珠海，是教育部批准设立、由北京师范大学和珠海市人民政府合作举办、进行本科层次教育的全日制普通本科高校。
+          </p>
+          <br>
+          <p>
+          北京师范大学珠海分校（Beijing Normal University, Zhuhai）坐落在海滨城市珠海，是教育部批准设立、由北京师范大学和珠海市人民政府合作举办、进行本科层次教育的全日制普通本科高校。
+          </p>
+          <br>
+        </div>
+        <div class="col-md-3">
+          <h2>友情链接</h2>
+          <p><a href="http://acm.bnuz.edu.cn">北京师范大学珠海分校ACM协会官网</a></p>
+          <p><a href="https://oj.bnuz.edu.cn">WeJudge在线评测教学辅助系统</a></p>
+        </div>
+      </div>
+
+    </div>
+    <center>
+        <br>
+        <p>
+          Copyright ©2017 北京师范大学珠海分校-QuanQqqqq
+        </p>
+      </center>
+  </footer>
+</body>
+    <script>
+      var index = 0;
+      var time = 0;
+      $(function(){
+        setInterval('printContent(time++);', 500);
+      });
+      function printContent(time){
+        var content = 'Hello world';
+        var len = content.length;
+        var newContent = '';
+        var rad = Math.round(Math.random() * 2);
+        if(rad){
+          index = index + 1 < len ? index + 1 : len;
+        }else{
+          index = index - 1 >= 0 ? index - 1 : 0;
+        }
+        for(var i = 0;i < index;i++)
+          newContent += content[i];
+        if(time % 2)
+          newContent += '|';
+        $('#content').html(newContent);
+      }
+    </script>
+</html>

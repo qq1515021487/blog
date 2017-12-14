@@ -1,0 +1,151 @@
+@charset "utf-8";
+@media (min-width: 180px) {
+  footer .container {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 20px;
+    background-color: #f0f0f0;
+    line-height: 25px;
+  }
+}
+footer a {
+  color: #000000;
+  text-decoration: none;
+}
+.footer_ul {
+  list-style-type: none;
+  text-align: left;
+}
+.footer_font1 {
+  font-size: 11px;
+  line-height: 30px;
+  text-align: left;
+  color: #000000;
+  font-weight: 700;
+}
+.footer_img {
+  width: 12px;
+  height: 12px;
+}
+.footer_font2 {
+  font-size: 10px;
+  line-height: 23px;
+  color: rgba(52, 26, 46, 0.78);
+  text-align: left;
+}
+.footer_font3 {
+  font-size: 9px;
+}
+.footer_contact {
+  width: 140px;
+  height: 110px;
+  border: #000000 1px solid;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  margin-right: 5%;
+  margin-left: 10%;
+  float: right;
+}
+.footer_contact_bottom {
+  width: 140px;
+  height: 15px;
+  float: left;
+  text-align: center;
+}
+.footer_contact_left {
+  width: 40px;
+  height: 110px;
+  float: left;
+  text-align: center;
+}
+.footer_contact_right {
+  width: 98px;
+  height: 110px;
+  float: left;
+}
+.footer_contact_1 {
+  width: 25px;
+  height: 32px;
+  margin-top: 20px;
+  margin-left: 6px;
+  padding-bottom: 7px;
+  border-bottom: #0f0f0f 1px solid;
+}
+.footer_contact_2 {
+  width: 25px;
+  height: 25px;
+  margin-top: 6px;
+  margin-bottom: 20px;
+  margin-left: 6px;
+}
+.footer_contact_img {
+  width: 25px;
+  height: 25px;
+}
+.footer_contact_img_1 {
+  margin-top: 6px;
+  width: 98px;
+  height: 98px;
+}
+.footer_top {
+  border-bottom: #0f0f0f 1px solid;
+  padding-bottom: 15px;
+}
+.footer_bottom {
+  padding-top: 5px;
+  float: right;
+}
+.row {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+.link_left {
+  float: left;
+  margin-right: 20px;
+}
+.link_right {
+  margin-top: 30px;
+  float: left;
+}
+@media (min-width: 768px) {
+  .col-sm-3 {
+    float: left;
+    width: 25%;
+  }
+  .col-sm-6 {
+    float: left;
+    width: 49.666667%;
+  }
+}
+@media (min-width: 992px) {
+  footer .col-md-1 {
+    float: left;
+    width: 13%;
+    height: inherit;
+    min-width: 40px;
+  }
+  footer .col-md-2 {
+    float: left;
+    width: 16%;
+    margin-left: -25px;
+    line-height: 40px;
+  }
+  footer .col-md-3 {
+    float: left;
+    width: 20%;
+    margin-left: -25px;
+  }
+  footer .col-md-4 {
+    float: left;
+    width: 38%;
+    margin-left: -25px;
+  }
+  footer .qrcode {
+    float: left;
+    width: 12%;
+    margin-left: 40px;
+  }
+}
