@@ -27,6 +27,12 @@ urlpatterns = [
     # 博客列表
     url(r'mySay/(?P<list_id>\d+)', views.mySay),
 
+    # 博客内容
+    url(r'^article/(?P<article_id>\d+)', views.article),
+
+    # 关于自己
+    url(r'^aboutMe/$', views.aboutMe),
+
     # 登录
     url('login/$', views.login),
 
