@@ -36,6 +36,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
-# 配置错误链接123
+# 配置错误链接
 handler404 = views.index
 handler500 = views.index
